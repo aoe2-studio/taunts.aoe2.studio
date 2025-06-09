@@ -1,0 +1,39 @@
+name: 'Create vercel preview URL on pull request'
+on: ['pull_request']
+jobs:
+  build_and_deploy:
+    permissions: 'write-all'
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+
+      - name: 'Install Vercel'
+        run: 'npm install -g vercel'
+
+      - name: 'Link Vercel project'
+        run: |
+          vercel link \
+            --token ${{ secrets.VERCEL_TOKEN }} \
+            --scope ${{ secrets.VERCEL_ORG_ID }} \
+            --yes
+
+      - name: Deploy to Vercel
+        id: vercel-deploy
+        run: |
+          DEPLOY_URL=$(vercel deploy \
+            --token ${{ secrets.VERCEL_TOKEN}} \
+            --scope ${{ secrets.VERCEL_ORG_ID}} \
+            --yes)
+
+          echo "preview-url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
+      - name: 'preview-url'
+        run: |
+          echo ${{ steps.vercel-deploy.outputs.preview-url }}
+
+      - name: 'Comment on PR'
+        uses: 'marocchino/sticky-pull-request-comment@v2'
+        with:
+          message: |
+            🚀 Preview Deployment: ${{ steps.vercel-deploy.outputs.preview-url }}
