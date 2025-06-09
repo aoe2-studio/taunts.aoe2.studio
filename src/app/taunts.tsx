@@ -61,12 +61,12 @@ export const Taunts = () => {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search taunts..."
-          className="w-full max-w-[60ch] p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           autoFocus
         />
       </header>
 
-      <ul className="list-disc w-[60ch] flex flex-col gap-1">
+      <ul className="list-disc flex flex-col gap-1">
         {filteredTaunts.map(({ key, text }) => (
           <li key={key}>
             {key}: {text}
