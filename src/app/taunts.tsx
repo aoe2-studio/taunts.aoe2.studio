@@ -10,6 +10,13 @@ export const Taunts = () => {
   return (
     <>
       <header className="flex flex-col gap-6">
+        <input
+          type="text"
+          value={query}
+          onChange={(event) => onQueryChange(event.target.value)}
+          placeholder="Search taunts..."
+          className="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
         <div className="flex flex-col gap-2">
           <h2 className="font-serif text-xl font-semibold tracking-wide">
             Categories
@@ -37,15 +44,6 @@ export const Taunts = () => {
             ))}
           </ul>
         </div>
-
-        <input
-          type="text"
-          value={query}
-          onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search taunts..."
-          className="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          autoFocus
-        />
       </header>
 
       <ul className="list-disc flex flex-col gap-1">
